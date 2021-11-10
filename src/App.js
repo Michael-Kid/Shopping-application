@@ -9,8 +9,15 @@ class App extends React.Component {
     super()
     this.state = {
       products: data.products,
-      cartItems: [],
-      cartCount: 0,
+      cartItems: localStorage.getItem('cartItems')
+        ? JSON.parse(localStorage.getItem('cartItems'))
+        : [],
+      cartCount: localStorage.getItem('cartItems')
+        ? JSON.parse(localStorage.getItem('cartItems')).reduce(
+            (acc, item) => acc + item.count,
+            0
+          )
+        : 0,
       size: '',
       sort: '',
     }
@@ -32,6 +39,7 @@ class App extends React.Component {
       cartCount++
     }
     this.setState({ cartItems, cartCount })
+    localStorage.setItem('cartItems', JSON.stringify(cartItems))
   }
 
   removeFromCart = (product) => {
@@ -45,6 +53,7 @@ class App extends React.Component {
     })
     const filteredItems = cartItems.filter((item) => item.count > 0)
     this.setState({ cartItems: filteredItems, cartCount })
+    localStorage.setItem('cartItems', JSON.stringify(filteredItems))
   }
 
   sortProducts = (e) => {
@@ -82,6 +91,10 @@ class App extends React.Component {
     }
   }
 
+  createOrder = (order) => {
+    alert(order.name)
+  }
+
   render() {
     return (
       <div className='grid-container'>
@@ -105,6 +118,7 @@ class App extends React.Component {
             </div>
             <div className='sidebar'>
               <Cart
+                createOrder={this.createOrder}
                 cartCount={this.state.cartCount}
                 cartItems={this.state.cartItems}
                 removeFromCart={this.removeFromCart}
