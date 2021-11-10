@@ -215,6 +215,7 @@ input {
   right: 1rem;
   top: 2.5rem;
   z-index: 1000;
+  cursor: pointer;
 }
 
 /* Order Details */
