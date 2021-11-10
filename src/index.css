@@ -131,7 +131,7 @@ footer {
 .filter div {
   flex: 1;
 }
-/* Index.css */
+/* cart */
 .cart {
   padding: 1rem;
   margin: 1rem;
@@ -159,6 +159,9 @@ footer {
 }
 .right {
   text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .total {
   display: flex;
