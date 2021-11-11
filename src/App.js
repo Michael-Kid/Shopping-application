@@ -1,8 +1,10 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import Cart from './components/Cart'
 import Filter from './components/Filter'
 import Products from './components/Products'
 import data from './data.json'
+import store from './redux/store'
 
 class App extends React.Component {
   constructor() {
@@ -97,37 +99,36 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='grid-container'>
-        <header>
-          <a href='/'>ShoppingNow</a>
-        </header>
-        <main>
-          <div className='content'>
-            <div className='main'>
-              <Filter
-                size={this.state.size}
-                sort={this.state.sort}
-                filterProducts={this.filterProducts}
-                sortProducts={this.sortProducts}
-                count={this.state.products.length}
-              />
-              <Products
-                products={this.state.products}
-                addToCart={this.addToCart}
-              />
+      <Provider store={store}>
+        <div className='grid-container'>
+          <header>
+            <a href='/'>ShoppingNow</a>
+          </header>
+          <main>
+            <div className='content'>
+              <div className='main'>
+                <Filter
+                  size={this.state.size}
+                  sort={this.state.sort}
+                  filterProducts={this.filterProducts}
+                  sortProducts={this.sortProducts}
+                  count={this.state.products.length}
+                />
+                <Products />
+              </div>
+              <div className='sidebar'>
+                <Cart
+                  createOrder={this.createOrder}
+                  cartCount={this.state.cartCount}
+                  cartItems={this.state.cartItems}
+                  removeFromCart={this.removeFromCart}
+                />
+              </div>
             </div>
-            <div className='sidebar'>
-              <Cart
-                createOrder={this.createOrder}
-                cartCount={this.state.cartCount}
-                cartItems={this.state.cartItems}
-                removeFromCart={this.removeFromCart}
-              />
-            </div>
-          </div>
-        </main>
-        <footer>Personal Shopping Mall</footer>
-      </div>
+          </main>
+          <footer>Personal Shopping Mall</footer>
+        </div>
+      </Provider>
     )
   }
 }
